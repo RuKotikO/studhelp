@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>СтудПомощь — Платформа взаимопомощи</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo"><a href="#" data-tab="home" style="text-decoration:none; color:inherit;">🤝 СтудПомощь</a></div>
+    <nav id="nav-auth"></nav>
+</header>
+
+<main class="container">
+        <!-- РАЗДЕЛ 1: ГЛАВНАЯ СТРАНИЦА -->
+        <div id="view-home">
+            <section class="hero-section">
+                <span class="hero-badge">🎓 Студенческое сообщество колледжа</span>
+                <h1>Платформа студенческой взаимопомощи</h1>
+                <p>Сложно разобраться с предметом или нужна помощь с проектом? Найди человека, готовогог помочь, или поделись своими знаниями сам!</p>
+                <div class="hero-buttons">
+                    <button type="button" class="btn btn-hero-primary" data-tab="catalog">Перейти в каталог заявок →</button>
+                    <button type="button" class="btn btn-hero-secondary" data-modal="registerModal">Присоединиться</button>
+                </div>
+            </section>
+    
+            <section class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Любые предметы</h3>
+                    <p>От математики и истории до программирования и тестирования программных модулей.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Быстрый отклик</h3>
+                    <p>Выбирайте подходящее предложение в каталоге и связывайтесь с автором в один клик.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Своё сообщество</h3>
+                    <p>Помощь от студентов вашего колледжа, которые уже прошли эти темы и знают требования преподавателей.</p>
+                </div>
+            </section>
+    
+            <section class="steps-section">
+                <h2>Как это работает?</h2>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <h4>Регистрация</h4>
+                        <p>Создайте аккаунт с указанием вашей учебной группы за 30 секунд.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <h4>Поиск или заявка</h4>
+                        <p>Найдите нужный предмет в каталоге или разместите своё предложение помощи.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">3</div>
+                        <h4>Совместная работа</h4>
+                        <p>Получайте отклики в личном кабинете и помогайте друг другу с учёбой.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    
+
+    <!-- РАЗДЕЛ 2: ВСТРОЕННЫЙ КАТАЛОГ -->
+    <div id="view-catalog" style="display: none;">
+        <div class="catalog-header">
+            <h1>Каталог заявок на помощь</h1>
+            <button id="btn-create-trigger" class="btn btn-success" data-modal="createModal" style="display: none;">+ Создать заявку</button>
+        </div>
+
+                <!-- Расширенный блок фильтрации и поиска -->
+                <div class="filter-box">
+                    <div class="filter-item" style="flex: 2;">
+                        <label for="filter-search">Поиск:</label>
+                        <input type="text" id="filter-search" placeholder="Название, описание или автор...">
+                    </div>
+        
+                    <div class="filter-item">
+                        <label for="filter-category">Предмет:</label>
+                        <select id="filter-category">
+                            <option value="all">Все предметы</option>
+                        </select>
+                    </div>
+        
+                    <div class="filter-item">
+                        <label for="filter-sort">Сортировка:</label>
+                        <select id="filter-sort">
+                            <option value="newest">Сначала новые</option>
+                            <option value="oldest">Сначала старые</option>
+                            <option value="updated">Недавно обновлённые</option>
+                        </select>
+                    </div>
+        
+                    <div class="filter-item filter-checkbox">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; margin: 0;">
+                            <input type="checkbox" id="filter-not-replied">
+                            <span>Только без отклика</span>
+                        </label>
+                    </div>
+        
+                    <button type="button" id="btn-reset-filters" class="btn" style="background: #95a5a6;">Сбросить</button>
+                </div>
+        
+
+        <!-- Сетка карточек -->
+        <div id="catalog-grid" class="grid"></div>
+    </div>
+</main>
+
+<!-- Модальное окно: Создание заявки -->
+<div id="createModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Новое предложение помощи</h2>
+        <form id="form-ticket">
+            <select id="select-category" name="category_id" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;"></select>
+            <input type="text" name="title" placeholder="Тема (например: Помогу с лабораторной по PHP)" required>
+            <textarea name="description" rows="4" placeholder="Подробное описание..." required></textarea>
+            <button type="submit" class="btn btn-success" style="width: 100%;">Опубликовать</button>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно: Вход -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Авторизация</h2>
+        <form id="form-login">
+            <input type="email" name="email" placeholder="Ваш Email" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit" class="btn" style="width: 100%;">Войти</button>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно: Регистрация с динамическими подсказками -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Регистрация студента</h2>
+        <form id="form-register" novalidate>
+            <div class="form-group">
+                <input type="text" name="first_name" placeholder="Имя" required>
+                <small class="field-hint"></small>
+            </div>
+            <div class="form-group">
+                <input type="text" name="last_name" placeholder="Фамилия" required>
+                <small class="field-hint"></small>
+            </div>
+            <div class="form-group">
+                <input type="text" name="group" placeholder="Группа (например, ИС-21)" required>
+                <small class="field-hint"></small>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email" required>
+                <small class="field-hint"></small>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Пароль (минимум 6 символов)" required>
+                <small class="field-hint"></small>
+            </div>
+            <button type="submit" class="btn btn-success" style="width: 100%;">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — СтудПомощь</title>
+    <link rel="stylesheet" href="/media/css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">🎓 СтудПомощь</div>
+    <nav id="nav-auth">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="index.html#catalog" class="nav-link">Каталог</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1 style="margin-bottom: 10px; color: #2c3e50;">Личный кабинет</h1>
+
+    <!-- =========================================
+         МОИ ДАННЫЕ
+    ========================================= -->
+    <div class="profile-card">
+        <div class="profile-card-header">
+            <h2>Мои данные</h2>
+            <button type="button" id="btn-edit-profile" class="btn">Редактировать</button>
+        </div>
+
+        <!-- Режим просмотра -->
+        <div id="profile-view-mode" class="profile-view-grid">
+            <div class="info-item">
+                <span>Имя и фамилия</span>
+                <b id="view-fullname">—</b>
+            </div>
+            <div class="info-item">
+                <span>Учебная группа</span>
+                <b id="view-group">—</b>
+            </div>
+            <div class="info-item" style="grid-column: 1 / -1;">
+                <span>Электронная почта (Email)</span>
+                <b id="view-email">—</b>
+            </div>
+        </div>
+
+        <!-- Режим редактирования -->
+        <form id="form-profile-edit" class="profile-form-grid" style="display: none;">
+            <div>
+                <label>Имя</label>
+                <input type="text" name="first_name" id="prof-first-name" required>
+            </div>
+            <div>
+                <label>Фамилия</label>
+                <input type="text" name="last_name" id="prof-last-name" required>
+            </div>
+            <div>
+                <label>Учебная группа</label>
+                <input type="text" name="group" id="prof-group" required>
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" id="prof-email" required>
+            </div>
+            <div style="grid-column: 1 / -1; display: flex; gap: 10px; margin-top: 5px;">
+                <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                <button type="button" id="btn-cancel-profile" class="btn" style="background: #95a5a6;">Отмена</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- =========================================
+         СТУДЕНЧЕСКИЙ КАЛЬКУЛЯТОР В ПРОФИЛЕ
+    ========================================= -->
+    <section class="calc-section" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="calc-header">
+            <div>
+                <h2>🧮 Студенческий калькулятор оценок</h2>
+                <p>Посчитай средний балл за сессию или узнай, сколько пятёрок нужно для исправления оценки</p>
+            </div>
+            <div class="calc-tabs">
+                <button type="button" class="calc-tab active" data-calc-tab="gpa">Средний балл</button>
+                <button type="button" class="calc-tab" data-calc-tab="target">Вытянуть оценку</button>
+            </div>
+        </div>
+
+        <!-- Вкладка 1: Средний балл -->
+        <div class="calc-body" id="calc-tab-gpa">
+            <div class="calc-input-row">
+                <input type="text" id="grades-input" placeholder="Вводи оценки через пробел или подряд, например: 5 4 5 5 3 4">
+                <div class="calc-quick-btns">
+                    <button type="button" class="grade-btn" data-grade="5">+5</button>
+                    <button type="button" class="grade-btn" data-grade="4">+4</button>
+                    <button type="button" class="grade-btn" data-grade="3">+3</button>
+                    <button type="button" class="grade-btn" data-grade="2">+2</button>
+                    <button type="button" class="grade-btn clear" id="grades-clear">Очистить</button>
+                </div>
+            </div>
+            <div class="calc-results">
+                <div class="calc-stat">
+                    <span>Средний балл</span>
+                    <b id="res-avg">0.00</b>
+                </div>
+                <div class="calc-stat">
+                    <span>Всего оценок</span>
+                    <b id="res-count">0</b>
+                </div>
+                <div class="calc-stat">
+                    <span>Статус стипендии</span>
+                    <b id="res-stipend">Введите оценки</b>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка 2: Сколько пятёрок нужно -->
+        <div class="calc-body" id="calc-tab-target" style="display:none;">
+            <div class="target-grid">
+                <div class="target-field">
+                    <label>Текущий средний балл</label>
+                    <input type="number" id="target-current" step="0.01" min="2" max="5" placeholder="Например: 3.85">
+                </div>
+                <div class="target-field">
+                    <label>Сколько уже стоит оценок</label>
+                    <input type="number" id="target-count" min="1" max="100" placeholder="Например: 7">
+                </div>
+                <div class="target-field">
+                    <label>Какой балл нужен</label>
+                    <select id="target-goal">
+                        <option value="4.5">4.50 (На «Отлично»)</option>
+                        <option value="3.5">3.50 (На «Хорошо»)</option>
+                        <option value="4.75">4.75 (На повышенную / красный диплом)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="target-answer" id="target-answer">
+                Заполни текущий балл и количество оценок, чтобы увидеть расчёт.
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         БЕЗОПАСНОСТЬ И ПАРОЛЬ
+    ========================================= -->
+    <div class="profile-card">
+        <h2>Безопасность и пароль</h2>
+        <form id="form-change-password" class="profile-form-grid">
+            <div style="grid-column: 1 / -1;">
+                <label>Текущий пароль</label>
+                <input type="password" name="old_password" placeholder="Введите текущий пароль" required>
+            </div>
+            <div>
+                <label>Новый пароль (минимум 6 символов)</label>
+                <input type="password" name="new_password" placeholder="Новый пароль" required minlength="6">
+            </div>
+            <div>
+                <label>Повторите новый пароль</label>
+                <input type="password" name="confirm_password" placeholder="Повторите новый пароль" required minlength="6">
+            </div>
+            <div style="grid-column: 1 / -1;">
+                <button type="submit" class="btn">Обновить пароль</button>
+            </div>
+        </form>
+    </div>
+    <!-- =========================================
+         ВХОДЯЩИЕ ОТКЛИКИ
+    ========================================= -->
+    <div id="incoming-section" class="profile-card" style="display: none;">
+        <h2>📩 Входящие отклики на мои заявки</h2>
+        <div id="incoming-grid" class="grid"></div>
+    </div>
+
+    <!-- =========================================
+         ИСХОДЯЩИЕ ОТКЛИКИ
+    ========================================= -->
+    <div id="outgoing-section" class="profile-card" style="display: none;">
+        <h2>📤 Мои отклики на чужие заявки</h2>
+        <div id="outgoing-grid" class="grid"></div>
+    </div>
+
+    <!-- =========================================
+         МОИ ЗАЯВКИ
+    ========================================= -->
+    <div class="profile-card">
+        <div class="profile-card-header">
+            <h2>Мои заявки</h2>
+            <span style="font-size: 13px; color: #7f8c8d;">Нажмите на строку для редактирования</span>
+        </div>
+        <div class="table-wrapper">
+            <table class="offers-table">
+                <thead>
+                    <tr>
+                        <th>Предмет</th>
+                        <th>Заголовок</th>
+                        <th>Создано</th>
+                        <th>Обновлено</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody id="my-offers-tbody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #7f8c8d;">Загрузка...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================
+     МОДАЛЬНОЕ ОКНО: РЕДАКТИРОВАНИЕ ЗАЯВКИ
+========================================= -->
+<div id="editOfferModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Редактирование заявки</h2>
+        <form id="form-edit-offer">
+            <input type="hidden" name="offer_id" id="edit-offer-id">
+
+            <label style="display:block; font-size:13px; color:#7f8c8d; margin-bottom:4px;">Предмет / категория:</label>
+            <select name="category_id" id="edit-offer-category" required></select>
+
+            <label style="display:block; font-size:13px; color:#7f8c8d; margin-bottom:4px;">Тип заявки:</label>
+            <select name="type" id="edit-offer-type" required>
+                <option value="need_help">Нужна помощь</option>
+                <option value="can_help">Могу помочь</option>
+            </select>
+
+            <label style="display:block; font-size:13px; color:#7f8c8d; margin-bottom:4px;">Заголовок:</label>
+            <input type="text" name="title" id="edit-offer-title" required maxlength="150">
+
+            <label style="display:block; font-size:13px; color:#7f8c8d; margin-bottom:4px;">Описание:</label>
+            <textarea name="description" id="edit-offer-desc" rows="4" required maxlength="3000"></textarea>
+
+            <label style="display:block; font-size:13px; color:#7f8c8d; margin-bottom:4px;">Статус:</label>
+            <select name="status" id="edit-offer-status" required>
+                <option value="open">Активно (открыто в каталоге)</option>
+                <option value="closed">Закрыто (скрыто из каталога)</option>
+            </select>
+
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button type="submit" class="btn btn-success" style="flex: 1;">Сохранить</button>
+                <button type="button" id="btn-delete-offer" class="btn btn-danger" style="flex: 1;">Удалить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/media/js/app.js"></script>
+</body>
+</html>
